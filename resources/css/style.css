@@ -1,0 +1,89 @@
+*{
+	font-family: montserrat;
+}
+body{
+	background: f1fbff;
+}
+.center{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10%;
+	width: 50%;
+}
+.section-padding{
+	padding: 100px 0;
+}
+.carousel-item{
+	height: 100vh;
+	min-height: 300px;
+}
+.carousel-caption{
+	bottom: 220px;
+	z-index: 2;
+}
+.carousel-caption h5{
+	font-size: 45px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	margin-top: 25px;
+}
+.carousel-caption p{
+	width: 60%;
+	margin: auto;
+	font-size: 18px;
+	line-height: 1.9;
+}
+.carousel-inner::before{
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 1;
+}
+.navbar-nav a{
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+.navbar-Light .navbar-brand{
+	color: #000;
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 2px;
+}
+.navbar-Light .navbar-brand:focus,
+.navbar-Light .navbar-brand:hover{
+	color: #000;
+}
+.navbar-Light .navbar-nav .navbar-Link{
+	color: #000;
+}
+.w-100{
+	height: 100vh;
+}
+
+.quality .card-body i{
+	font-size: 50px;
+}
+
+.team .card-body i{
+	font-size: 25px;
+}
+
+.team .card{
+	box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+h2{
+	font-size: 50px;
+	font-weight: 550;
+}
+p{
+	font-size: 20px;
+}
