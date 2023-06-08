@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CheckController;
 use App\Http\Controllers\st_progContorller;
+use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Listing;
@@ -17,28 +19,10 @@ use App\Models\st_prog;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Route::get('/', function () {
     return view('home');
 });
 
-/*Route::get('/addapp', function () {
-    return view('addapp');
-});
-
-Route::get('/editapp', function () {
-    return view('editapp');
-});
-
-Route::get('/listapp', function () {
-    return view('listapp', [
-        'heading'=> 'List of apps',
-        'listapp' => st_prog::all()
-    ]);
-});*/
 //Show list of apps
 Route::get('/listapp',[st_progContorller::class,'show']);
 //Single app
@@ -57,15 +41,14 @@ Route::get('/editapp/{st_prog}',[st_progContorller::class,'edit']);
 Route::put('/editapp/{st_prog}', [st_progContorller::class,'update']);
 //Delete app
 Route::delete('/editapp/{st_prog}', [st_progContorller::class,'destroy']);
+//Show matched files
+Route::get('/listchecks',[UploadController::class,'show']);
+//Upload a file to check
+Route::get('/upload', [UploadController::class, 'upload']);
+//Single file upload
+Route::post('/upload-single',          [UploadController::class, 'uploadSingle']);
+//Multiple files upload
+Route::post('/upload-multiple',        [UploadController::class, 'uploadMultiple']);
 
-
-//-----------------------------------------------------
-//All listings
-Route::get('/listings', function () {
-    return view('listings', [
-        'heading'=> 'Latest Listings',
-        'listings' => Listing::all()
-    ]);
-});
-
-//-----------------------------------------------------
+/*Route::post('/upload-single-custom',   [UploadController::class, 'uploadSingleCustom']);
+Route::post('/upload-multiple-custom', [UploadController::class, 'uploadMultipleCustom']);*/

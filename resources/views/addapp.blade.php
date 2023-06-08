@@ -11,7 +11,7 @@
     <form method="POST" action="/addapp" enctype="multipart/form-data">
       @csrf
 
-      <div class="mb-6">
+      {{--<div class="mb-6">
         <label for="id" class="inline-block text-lg mb-2">Id</label>
         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="id"
           value="{{old('id')}}" />
@@ -19,7 +19,7 @@
         @error('id')
         <p class="text-red-500 text-xs mt-1">{{$message}}</p>
         @enderror
-      </div>
+      </div>--}}
 
       <div class="mb-6">
         <label for="prog_name" class="inline-block text-lg mb-2">Program name</label>

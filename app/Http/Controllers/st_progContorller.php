@@ -24,7 +24,7 @@ class st_progContorller extends Controller
         //dd($request->all());
         $formFields = $request->validate(
             [
-                'id' => 'required',
+                //'id' => 'required',
                 'prog_name' => ['required',Rule::unique('st_progs','prog_name')],
                 'is_portable' => 'required',
                 'author' => 'required',
@@ -51,7 +51,7 @@ class st_progContorller extends Controller
         //dd($request->all());
         $formFields = $request->validate(
             [
-                'id' => 'required',
+                //'id' => 'required',
                 'prog_name' => 'required',
                 'is_portable' => 'required',
                 'author' => 'required',
