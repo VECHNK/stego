@@ -1,52 +1,33 @@
 @extends('layout')
 @section('content')
-<br>
-<br>
-<br>
-<main>
-    <div class="row mb-2">
-        <div class="col-sm-8 offset-2">
-            @if(Session::has('message'))
+    <header class="text-center mt-5">
+        <h2 class="text-2xl font-bold uppercase mb-1">Загрузите ваши файлы для проверки</h2>
+    </header>
+
+    <main class='container w-50'>
+        {{-- @if (Session::has('message'))
             <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
-            @endif
-            <div class="row">
-                <div class="col-md-4">
-                    <h6>Upload Single</h6>
+            @endif --}}
+        <style>
+            ::file-selector-button {
+                display: none;
+            }
+        </style>
+        <div class="row mt-5">
+            <div class="col">
+                <div class="col text-center">
+                    <h6>Выберите файлы</h6>
                 </div>
-                <div class="col-md-6">
-                    <form method="POST" action="{{ url('upload-single') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" name="file" class="custom-file-input" id="inputFileSingle" {{--required accept="image/*--}}">
-                                <label class="custom-file-label" for="inputFileSingle">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary float-right mr-2">Upload <i class="fa fa-upload"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <h6>Upload Multiple</h6>
-                </div>
-                <div class="col-md-6">
-                    <form method="POST" action="{{ url('upload-multiple') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" name="files[]" class="custom-file-input" id="inputFileMultiple" {{--required accept="image/*"--}} multiple>
-                                <label class="custom-file-label" for="inputFileMultiple">Choose file</label>
-                            </div>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary float-right mr-2">Upload <i class="fa fa-upload"></i></button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="mt-5">
+                <form class="d-flex flex-column gap-3" method="POST" action="{{ url('upload-multiple') }}"
+                    enctype="multipart/form-data">
+                    @csrf
+                    {{-- <label class="custom-file-label" for="inputFileMultiple">Выберите файлы</label> --}}
+                    <input type="file" name="files[]" class="btn btn-outline-warning" id="inputFileMultiple"
+                        {{-- required accept="image/*" --}} multiple>
+                    <button type="submit" class="btn btn-primary float-right mr-2"><i class="bi bi-cloud-arrow-up"></i> Загрузить</button>
+                </form>
                 </div>
             </div>
-            
-</main>
+    </main>
 @endsection

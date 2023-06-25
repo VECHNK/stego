@@ -1,136 +1,127 @@
 @extends('layout')
 
 @section('content')
-<br>
-<br>
 
-    <header class="text-center">
-      <h2 class="text-2xl font-bold uppercase mb-1">Add a new application</h2>
-    </header>
+        <header class="text-center mt-5">
+            <h2 class="text-2xl font-bold uppercase mb-1">Добавление новой программы</h2>
+        </header>
 
-    <form method="POST" action="/addapp" enctype="multipart/form-data">
-      @csrf
+        <form class="p-5" method="POST" action="/addapp">
+            @csrf
 
-      {{--<div class="mb-6">
-        <label for="id" class="inline-block text-lg mb-2">Id</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="id"
-          value="{{old('id')}}" />
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="prog_name" class="form-label">Имя программы</label>
+                    <input type="text" class="form-control" name="prog_name" value="{{ old('Name') }}" />
 
-        @error('id')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>--}}
+                    @error('prog_name')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-      <div class="mb-6">
-        <label for="prog_name" class="inline-block text-lg mb-2">Program name</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="prog_name"
-          value="{{old('Name')}}" />
+                {{-- <div class="col-md-3">
+            <label for="is_portable" class="form-label">Портативность</label>
+            <input type="text" class="form-control" name="is_portable" placeholder="1 or 0"
+                value="{{ old('is_portable') }}" />
 
-        @error('prog_name')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+            @error('is_portable')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div> --}}
 
-      <div class="mb-6">
-        <label for="is_portable" class="inline-block text-lg mb-2">Is portable?</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="is_portable"
-          placeholder="1 or 0" value="{{old('is_portable')}}" />
+                <div class="col">
+                    <label for="author" class="form-label">Автор</label>
+                    <input type="text" class="form-control" name="author" placeholder="Example: John Doe"
+                        value="{{ old('author') }}" />
 
-        @error('is_portable')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+                    @error('author')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-      <div class="mb-6">
-        <label for="author" class="inline-block text-lg mb-2">Author</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="author"
-          placeholder="Example: John Doe" value="{{old('author')}}" />
 
-        @error('author')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+            {{-- <div class="col">
+            <label for="type" class="form-label">Тип</label>
+            <input type="text" class="form-control" name="type" placeholder="Example:Structural/Digital"
+                value="{{ old('type') }}" />
 
-      <div class="mb-6">
-        <label for="type" class="inline-block text-lg mb-2">Type</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="type"
-          placeholder="Example:Structural/Digital" value="{{old('type')}}" />
+            @error('type')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div> --}}
 
-        @error('type')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <label class="form-label" for="TypeSelect">Вид программы</label>
+                    <select class="form-select" id="TypeSelect" name="type">
+                        <option value="Digital">Digital</option>
+                        <option value="Structural">Structural</option>
+                    </select>
+                </div>
 
-      <div class="mb-6">
-        <label for="extension" class="inline-block text-lg mb-2">Extension</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="extension"
-          placeholder="Example:PNG/JPEG/MP3/WAV..." value="{{old('extension')}}" />
+                <div class="col">
+                    <label for="extension" class="form-label">Расширения</label>
+                    <input type="text" class="form-control" name="extension" placeholder="Example:PNG/JPEG/MP3/WAV..."
+                        value="{{ old('extension') }}" />
 
-        @error('extension')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+                    @error('extension')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-      <div class="mb-6">
-        <label for="encryption" class="inline-block text-lg mb-2">Encryption</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="encryption"
-          placeholder="Example:AES,RC,CPP..." value="{{old('encryption')}}" />
+                <div class="col">
+                    <label for="encryption" class="form-label">Тип шифрования</label>
+                    <input type="text" class="form-control" name="encryption" placeholder="Example:AES,RC,CPP..."
+                        value="{{ old('encryption') }}" />
 
-        @error('encryption')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+                    @error('encryption')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-      <div class="mb-6">
-        <label for="operating_system" class="inline-block text-lg mb-2">OS</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="operating_system"
-          placeholder="Example:Windows/Linux" value="{{old('operating_system')}}" />
+            <div class="row mb-4">
+                <div class="col">
+                    <label for="operating_system" class="form-label">Операционная система</label>
+                    <input type="text" class="form-control" name="operating_system" placeholder="Example:Windows/Linux"
+                        value="{{ old('operating_system') }}" />
 
-        @error('operating_system')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+                    @error('operating_system')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-      <div class="mb-6">
-        <label for="creation_date" class="inline-block text-lg mb-2">Created in</label>
-        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="creation_date"
-          placeholder="Example:2023" value="{{old('creation_date')}}" />
+                <div class="col">
+                    <label for="creation_date" class="form-label">Год создания</label>
+                    <input type="text" class="form-control" name="creation_date" placeholder="Example:2023"
+                        value="{{ old('creation_date') }}" />
 
-        @error('creation_date')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>
+                    @error('creation_date')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
-      {{--<div class="mb-6">
-        <label for="logo" class="inline-block text-lg mb-2">
-          Company Logo
-        </label>
-        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
+            <div class="row mb-4">
+                <div class="col">
+                    <input type="checkbox" class="form-check-input" name="is_portable" id="gridCheck" >
+                    <label class="form-check-label" for="gridCheck">
+                     Портативность
+                    </label>
+                </div>
+            </div>
 
-        @error('logo')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>--}}
+            <div class="row">
+                <div class='col-3'>
+                    <button type="submit" class="btn btn-warning text-dark">
+                        Добавить программу
+                    </button>
+                </div>
+            </div>
 
-      {{--<div class="mb-6">
-        <label for="description" class="inline-block text-lg mb-2">
-          Job Description
-        </label>
-        <textarea class="border border-gray-200 rounded p-2 w-full" name="description" rows="10"
-          placeholder="Include tasks, requirements, salary, etc">{{old('description')}}</textarea>
-
-        @error('description')
-        <p class="text-red-500 text-xs mt-1">{{$message}}</p>
-        @enderror
-      </div>--}}
-
-      <div class="mb-6">
-        <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-black">
-          Submit app
-        </button>
-
-        <a href="/" class="text-black ml-4"> Back </a>
-      </div>
-    </form>
-
+            <div class="row mt-3">
+                <a href="/" class="text-black"> Вернуться </a>
+            </div>
+        </form>
 @endsection

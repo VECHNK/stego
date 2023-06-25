@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\filecheck;
 use App\Models\file_as;
+use App\Models\st_prog;
+
 
 class UploadController extends Controller
 {
@@ -40,9 +42,9 @@ class UploadController extends Controller
                     'size'=>$size,
                     'st_prog'=>$cfile->st_prog_name]);
 
-                    return redirect('/listchecks')->with('message','Match found.');
+                    return redirect('/listchecks')->with('message','Совпадения найдены.');
             }
-                return redirect()->back()->with('message','No matches found.');
+                return redirect()->back()->with('message','Совпадения не найдены.');
             }
             
         }
@@ -53,7 +55,7 @@ class UploadController extends Controller
     {
         if($request->hasFile('files')) {
             $files = $request->file('files');
-
+            $count = 0;
             foreach ($files as $key => $file) {
                 if($file->isValid()) {
                 $filePath = $file->store('public/uploads');
@@ -65,7 +67,8 @@ class UploadController extends Controller
                 foreach (file_as::all() as $cfile)
                 {
                 if ($cfile->MD5==$filehash)
-                {
+                    {
+                        $count=$count+1;
                     filecheck::create([
                         'path'=>$filePath,
                         'filename'=>$fileName,
@@ -73,49 +76,49 @@ class UploadController extends Controller
                         'type'=>$type,
                         'size'=>$size,
                         'st_prog'=>$cfile->st_prog_name]);
+                    }
                 }
             }
             }
+            if ($count == 0)
+            {
+            return redirect()->back()->with('message','Совпадения не найдены.');   
             }
-            return redirect('/listchecks')->with('message','File uploaded.');
+            else
+            return redirect('/listchecks')->with('message','Совпадения найдены.');
         }
         return redirect()->back();
     }
 
-    public function uploadSingleCustom(Request $request)
-    {
-        if($request->hasFile('file')) {
-            $file = $request->file('file');
-
-            if($file->isValid()) {
-                $destinationPath = public_path('uploads');
-                $extension = $file->getClientOriginalExtension();
-                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileName = $originalName . '-' . uniqid() . '.' . $extension;
-                $file->move($destinationPath, $fileName);
-
-                return redirect()->back()->with('message','File uploaded.');
-            }
-        }
-        return redirect()->back();
-    }
-
-    public function uploadMultipleCustom(Request $request)
+    public function UploadProgFiles(Request $request,st_prog $st_prog)
     {
         if($request->hasFile('files')) {
             $files = $request->file('files');
 
             foreach ($files as $key => $file) {
                 if($file->isValid()) {
-                    $destinationPath = public_path('uploads');
-                    $extension = $file->getClientOriginalExtension();
-                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    $fileName = $originalName . '-' . uniqid() . '.' . $extension;
-                    $file->move($destinationPath, $fileName);
-                }
+                $fileName = $file->getClientOriginalName();
+                $type = $file->getMimeType();
+                $size = $file->getSize();
+                $filehashmd5 = md5_file($file);
+                $filehashsha1 = sha1_file($file);
+                //$filehashsha256 = CRYPT_SHA256($file);
+                $prog_name = $st_prog->prog_name;
+                //dd($prog_name);
+                        file_as::create([
+                            'file_name'=>$fileName,
+                            'st_prog_name'=>$prog_name,
+                            'type'=>$type,
+                            'size'=>$size,
+                            'SHA1'=>$filehashsha1,
+                            'MD5'=>$filehashmd5,
+                            ]);
+                }   
             }
-            return redirect()->back()->with('message','File uploaded.');
+            return redirect('/listapp')->with('message','Файлы загружены.');
+            }
+            return redirect()->back();
         }
-        return redirect()->back();
+        
     }
-}
+
